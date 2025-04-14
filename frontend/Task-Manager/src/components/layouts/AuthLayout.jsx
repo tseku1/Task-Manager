@@ -9,7 +9,7 @@ const AuthLayout = ({ children }) => {
             <h2 className='text-lg font-medium text-black'>Task Manager</h2>
             {children}
         </div>
-        <div className='hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-[url(`/bg-img.png`)] bg-co-repeat bg-center overflow-hidden p-8 '>
+        <div className='hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-[url("/bg-img.png")] bg-co-repeat bg-center overflow-hidden p-8 '>
             <img src={UI_IMG} className='w-64 lg:w-[90%]'></img>
         </div>
     </div>

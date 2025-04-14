@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AuthLayout from '../../components/layouts/AuthLayout';
 import {Link, useNavigate} from 'react-router-dom';
 import Input from '../../components/inputs/input';
+import { validateEmail } from '../../utils/helper';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -62,7 +63,7 @@ const Login = () => {
 
           <p className='text-[13px] text-slate-800 mt-3'>
               Don't have an account?{" "}
-              <Link className='font-medium text-primary underline' to="signup">
+              <Link className='font-medium text-primary underline' to="/signup">
                 SignUp
               </Link>
           </p>
