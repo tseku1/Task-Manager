@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useState } from 'react';
 import AuthLayout from '../../components/layouts/AuthLayout';
 import {Link, useNavigate} from 'react-router-dom';
 import Input from '../../components/inputs/input';
 import { validateEmail } from '../../utils/helper';
 import {API_PATHS} from "../../utils/apiPath";
 import axiosInstance from "../../utils/axiosInstance";
-import userContext from "../../context/userContext"
+import {UserContext} from "../../context/userContext"
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const {updateUser} = userContext(userContext);
+  const {updateUser} = useContext(UserContext);
   const navigate = useNavigate();
 
   // handle login form submit
@@ -52,6 +52,7 @@ const Login = () => {
         }
       }
     }catch(error){
+      console.log(error);
       if(error.response && error.response.data.message){
         setError(error.response.data.message);
       }else{
