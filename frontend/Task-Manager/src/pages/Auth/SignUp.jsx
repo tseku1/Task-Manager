@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import ProfilePhotoSelector from '../../components/inputs/ProfilePhotoSelector';
-import Input from '../../components/inputs/input';
+import Input from '../../components/inputs/Input';
 import { Link , useNavigate} from 'react-router-dom';
 import { validateEmail } from "../../utils/helper"
 import axiosInstance from '../../utils/axiosInstance';
@@ -25,7 +25,7 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
       e.preventDefault();
 
-      let profileImageURL = "";
+      let profileImageUrl = "";
   
       if(!fullName){
         setError("Please enter full name.");
@@ -50,15 +50,16 @@ const SignUp = () => {
         // Upload image if present
 
         if(profilePic){
+          console.log(profilePic);
           const imgUploadRes = await uploadImage(profilePic);
-          profileImageURL = imgUploadRes.imageURL || "";
+          profileImageUrl = imgUploadRes.imageUrl || "";
         }
 
         const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
           name: fullName,
           email,
           password,
-          profileImageURL,
+          profileImageUrl,
           adminInviteToken,
         });
 
