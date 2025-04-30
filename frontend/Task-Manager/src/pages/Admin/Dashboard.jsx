@@ -76,7 +76,7 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      {JSON.stringify(dashboardData)}
+      {/* {JSON.stringify(dashboardData)} */}
       <div className='card my-5'>
         <div>
           <div className='col-span-3'>
