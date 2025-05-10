@@ -143,7 +143,7 @@ const updateTask = async (req, res) => {
         task.priority = req.body.priority || task.priority;
         task.dueDate = req.body.dueDate || task.dueDate;
         task.todoChecklist = req.body.todoChecklist || task.todoChecklist;
-        task.attachment = req.body.attachments || task.attachment;
+        task.attachments = req.body.attachments || task.attachments;
 
         if(req.body.assignedTo){
             if(!Array.isArray(req.body.assignedTo)){

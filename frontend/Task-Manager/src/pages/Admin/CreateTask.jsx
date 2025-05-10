@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import { PRIORITY_DATA } from '../../utils/data';
 import axiosInstance from '../../utils/axiosInstance';
@@ -68,12 +68,11 @@ const CreateTask = () => {
         dueDate: new Date(taskData.dueDate).toISOString(),
         todoChecklist: todolist,
       });
-
       toast.success("Task Created Successfully");
 
       clearData();
     }catch(error){
-      console.log("Error creating task:", error);
+      // console.log("Error creating task:", error);
       setLoading(false);
     }finally{
       setLoading(false);
@@ -85,6 +84,7 @@ const CreateTask = () => {
 
   const handleSubmit = async () => {
     setError(null);
+    // console.log("create task error: ", error);
 
     // Input validation 
     if(!taskData.title.trim()){
@@ -108,6 +108,9 @@ const CreateTask = () => {
       setError("Add atleast one todo task");
       return;
     }
+    if(taskData.attachments?.length === 0){
+      setError("Add attachments pls");
+    }
     if(taskId){
       updateTask();
       return;
@@ -117,10 +120,45 @@ const CreateTask = () => {
   };
 
   // get Task info by ID
-  const getTaskDetailsByID = async () => {};
+  const getTaskDetailsByID = async () => {
+    try{
+      console.log(taskId);
+      const response = await axiosInstance.get(
+        API_PATHS.TASKS.GET_TASK_BY_ID(taskId)
+      );
+
+      if(response.data){
+        const taskInfo = response.data;
+        setCurrentTask(taskInfo);
+
+        setTaskData((prevState) => ({
+          title: taskInfo.title,
+          description: taskInfo.description,
+          priority: taskInfo.priority,
+          dueDate: taskInfo.dueDate
+            ? moment(taskInfo.dueDate).format("YYYY-MM-DD")
+            : null,
+          assignedTo: taskInfo?.assignedTo?.map((item) => item?._id) || [],
+          todoChecklist: 
+            taskInfo?.todoChecklist?.map((item) => item?.text) || [],
+            attachments: taskInfo?.attachments || [],
+        }));
+      }
+    }catch(error){
+      console.error("Error fetching users:", error);
+    }
+  };
 
   // Delete Task
   const deleteTask = async () => {};
+
+  useEffect(() => {
+    if(taskId){
+      getTaskDetailsByID(taskId)
+    }
+
+    return () => {};
+  }, [taskId]);
 
   return (
     <DashboardLayout activeMenu="Create Task">

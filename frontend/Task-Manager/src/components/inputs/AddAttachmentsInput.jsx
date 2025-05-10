@@ -9,6 +9,7 @@ const AddAttachmentsInput = ({attachments, setAttachments}) => {
     const handleAddOption = () => {
         if(option.trim()){
             setAttachments([...attachments, option.trim()]);
+            // console.log("Submitting task with attachments:", taskData.attachments);
             setOption("");
         }
     };
